@@ -95,6 +95,7 @@ namespace DataSorter
                 string medium = mediums.ContainsKey(whatsappNumber) ? mediums[whatsappNumber] : "-";
 
                 sortedData.Add($"{name},{whatsappNumber},{grade},{medium}");
+
             }
 
             // Save sorted data to a new CSV file
