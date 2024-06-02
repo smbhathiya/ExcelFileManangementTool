@@ -15,7 +15,7 @@ namespace DataSorter
             InitializeComponent();
         }
 
-        private void btnUpload_Click_1(object sender, EventArgs e)
+       private void btnUpload_Click_1(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
@@ -45,15 +45,22 @@ namespace DataSorter
                 return;
             }
 
-            // Read all lines from the CSV file
-            string[] lines = File.ReadAllLines(txtFilePath.Text);
+            string originalFileName = Path.GetFileNameWithoutExtension(txtFilePath.Text);
+            string outputFileName = originalFileName + "_organized_data.csv"; // Appending "_organized_data.csv" to the original file name
 
-            // Initialize dictionaries to store names, grades, and mediums
-            Dictionary<string, string> names = new Dictionary<string, string>();
+            // Read all lines from the CSV file with UTF-8 encoding
+            string[] lines = File.ReadAllLines(txtFilePath.Text, Encoding.UTF8);
+
+            // Initialize dictionaries to store names, grades, mediums, and courses
+            Dictionary<string, List<string>> names = new Dictionary<string, List<string>>();
             Dictionary<string, string> grades = new Dictionary<string, string>();
             Dictionary<string, string> mediums = new Dictionary<string, string>();
+            Dictionary<string, string> courses = new Dictionary<string, string>();
 
-            // Parse each line of the CSV file and extract names, grades, and mediums
+            // HashSet to keep track of unique names
+            HashSet<string> uniqueNames = new HashSet<string>();
+
+            // Parse each line of the CSV file and extract names, grades, mediums, and courses
             foreach (string line in lines)
             {
                 string[] parts = line.Split(',');
@@ -67,10 +74,22 @@ namespace DataSorter
                 string value = parts[1].Trim();
                 string whatsappNumber = parts[2].Trim();
 
-                // Check if entityName is "Name", "Grade", or "Medium" and store the value accordingly
+                // Check if entityName is "Name", "Grade", "Medium", or "Course" and store the value accordingly
                 if (entityName.Equals("Name", StringComparison.OrdinalIgnoreCase))
                 {
-                    names[whatsappNumber] = value;
+                    // Skip if the name is already encountered
+                    if (uniqueNames.Contains(value))
+                    {
+                        continue;
+                    }
+
+                    uniqueNames.Add(value); // Add the name to the set of unique names
+
+                    if (!names.ContainsKey(value))
+                    {
+                        names[value] = new List<string>();
+                    }
+                    names[value].Add(whatsappNumber);
                 }
                 else if (entityName.Equals("Grade", StringComparison.OrdinalIgnoreCase))
                 {
@@ -80,29 +99,36 @@ namespace DataSorter
                 {
                     mediums[whatsappNumber] = value;
                 }
+                else if (entityName.Equals("Course", StringComparison.OrdinalIgnoreCase))
+                {
+                    courses[whatsappNumber] = value;
+                }
             }
 
             // Create a list to store the sorted data
             List<string> sortedData = new List<string>();
-            sortedData.Add("Name,WhatsApp Number,Grade,Medium");
+            sortedData.Add("Name,WhatsApp Number,Grade,Medium,Course");
 
             // Use names dictionary as the base for sorting
             foreach (var pair in names)
             {
-                string whatsappNumber = pair.Key;
-                string name = pair.Value;
-                string grade = grades.ContainsKey(whatsappNumber) ? grades[whatsappNumber] : "-";
-                string medium = mediums.ContainsKey(whatsappNumber) ? mediums[whatsappNumber] : "-";
+                string name = pair.Key;
+                List<string> whatsappNumbers = pair.Value;
+                foreach (string whatsappNumber in whatsappNumbers)
+                {
+                    string grade = grades.ContainsKey(whatsappNumber) ? grades[whatsappNumber] : "-";
+                    string medium = mediums.ContainsKey(whatsappNumber) ? mediums[whatsappNumber] : "-";
+                    string course = courses.ContainsKey(whatsappNumber) ? courses[whatsappNumber] : "-";
 
-                sortedData.Add($"{name},{whatsappNumber},{grade},{medium}");
-
+                    sortedData.Add($"{name},{whatsappNumber},{grade},{medium},{course}");
+                }
             }
 
-            // Save sorted data to a new CSV file
-            string outputPath = Path.Combine(Path.GetDirectoryName(txtFilePath.Text), "sorted_data.csv");
-            File.WriteAllLines(outputPath, sortedData);
+            // Save sorted data to a new CSV file with UTF-8 encoding
+            string outputPath = Path.Combine(Path.GetDirectoryName(txtFilePath.Text), outputFileName);
+            File.WriteAllLines(outputPath, sortedData, Encoding.UTF8);
 
-            MessageBox.Show("Sorting completed. Sorted data saved to sorted_data.csv");
+            MessageBox.Show($"Sorting completed. Sorted data saved to {outputFileName}");
         }
 
 
