@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using OfficeOpenXml;
 
 namespace DataSorter
 {
@@ -13,15 +14,16 @@ namespace DataSorter
         public Form1()
         {
             InitializeComponent();
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         }
 
-       private void btnUpload_Click_1(object sender, EventArgs e)
+        private void btnUpload_Click_1(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
             // Set filter options and filter index
-            openFileDialog1.Filter = "CSV Files|*.csv|All Files|*.*";
-            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.Filter = "Excel Files|*.xlsx|All Files|*.*";
+            openFileDialog1.FilterIndex = 2;
 
             openFileDialog1.Multiselect = false;
 
@@ -41,15 +43,39 @@ namespace DataSorter
             // Check if a file path has been provided
             if (string.IsNullOrEmpty(txtFilePath.Text))
             {
-                MessageBox.Show("Please select a CSV file first.");
+                MessageBox.Show("Please select a CSV or Excel file first.");
                 return;
             }
 
             string originalFileName = Path.GetFileNameWithoutExtension(txtFilePath.Text);
             string outputFileName = originalFileName + "_organized_data.csv"; // Appending "_organized_data.csv" to the original file name
 
-            // Read all lines from the CSV file with UTF-8 encoding
-            string[] lines = File.ReadAllLines(txtFilePath.Text, Encoding.UTF8);
+            List<string> lines = new List<string>();
+
+            // Determine the file type and read the content
+            if (Path.GetExtension(txtFilePath.Text).Equals(".csv", StringComparison.OrdinalIgnoreCase))
+            {
+                // Read all lines from the CSV file with UTF-8 encoding
+                lines = File.ReadAllLines(txtFilePath.Text, Encoding.UTF8).ToList();
+            }
+            else if (Path.GetExtension(txtFilePath.Text).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
+            {
+                // Read all lines from the Excel file using EPPlus
+                using (var package = new ExcelPackage(new FileInfo(txtFilePath.Text)))
+                {
+                    var worksheet = package.Workbook.Worksheets.First();
+                    for (int row = 1; row <= worksheet.Dimension.End.Row; row++)
+                    {
+                        var line = string.Join(",", worksheet.Cells[row, 1, row, worksheet.Dimension.End.Column].Select(c => c.Text));
+                        lines.Add(line);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Unsupported file format. Please select a CSV or Excel file.");
+                return;
+            }
 
             // Initialize dictionaries to store names, grades, mediums, and courses
             Dictionary<string, List<string>> names = new Dictionary<string, List<string>>();
@@ -60,7 +86,7 @@ namespace DataSorter
             // HashSet to keep track of unique names
             HashSet<string> uniqueNames = new HashSet<string>();
 
-            // Parse each line of the CSV file and extract names, grades, mediums, and courses
+            // Parse each line of the file and extract names, grades, mediums, and courses
             foreach (string line in lines)
             {
                 string[] parts = line.Split(',');
@@ -130,8 +156,6 @@ namespace DataSorter
 
             MessageBox.Show($"Sorting completed. Sorted data saved to {outputFileName}");
         }
-
-
 
     }
 

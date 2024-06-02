@@ -53,7 +53,7 @@
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(212, 56);
             this.btnUpload.TabIndex = 1;
-            this.btnUpload.Text = "Select File";
+            this.btnUpload.Text = "SELECT FILE";
             this.btnUpload.UseVisualStyleBackColor = false;
             this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click_1);
             // 
@@ -67,7 +67,7 @@
             this.btnSort.Name = "btnSort";
             this.btnSort.Size = new System.Drawing.Size(195, 56);
             this.btnSort.TabIndex = 2;
-            this.btnSort.Text = "Organize";
+            this.btnSort.Text = "ORGANIZE";
             this.btnSort.UseVisualStyleBackColor = false;
             this.btnSort.Click += new System.EventHandler(this.btnSort_Click_1);
             // 
@@ -86,17 +86,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(672, 486);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSort);
             this.Controls.Add(this.btnUpload);
             this.Controls.Add(this.txtFilePath);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Data Organizer";
-            this.MaximizeBox = false;
             this.ResumeLayout(false);
             this.PerformLayout();
 
