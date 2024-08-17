@@ -26,6 +26,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.filesselectbtn = new System.Windows.Forms.Button();
             this.mergebtn = new System.Windows.Forms.Button();
+            this.fileCount = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtFilePath
@@ -82,7 +83,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.label1.ForeColor = System.Drawing.Color.Gray;
+            this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(25, 30);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
@@ -94,7 +95,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.label2.ForeColor = System.Drawing.Color.Gray;
+            this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(25, 200);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
@@ -150,6 +151,16 @@
             this.mergebtn.TabIndex = 7;
             this.mergebtn.Text = "Merge Files";
             this.mergebtn.UseVisualStyleBackColor = false;
+            this.mergebtn.Click += new System.EventHandler(this.mergebtn_Click);
+            // 
+            // fileCount
+            // 
+            this.fileCount.AutoSize = true;
+            this.fileCount.Location = new System.Drawing.Point(772, 241);
+            this.fileCount.Name = "fileCount";
+            this.fileCount.Size = new System.Drawing.Size(58, 16);
+            this.fileCount.TabIndex = 8;
+            this.fileCount.Text = "fileCount";
             // 
             // Form1
             // 
@@ -157,6 +168,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(886, 510);
+            this.Controls.Add(this.fileCount);
             this.Controls.Add(this.mergebtn);
             this.Controls.Add(this.filesselectbtn);
             this.Controls.Add(this.label2);
@@ -187,5 +199,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button filesselectbtn;
         private System.Windows.Forms.Button mergebtn;
+        private System.Windows.Forms.Label fileCount;
     }
 }

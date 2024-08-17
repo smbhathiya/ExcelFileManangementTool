@@ -16,44 +16,15 @@ namespace DataSorter
             InitializeComponent();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Apply rounded corners to btnUpload
-            System.Drawing.Drawing2D.GraphicsPath path1 = new System.Drawing.Drawing2D.GraphicsPath();
-            path1.AddArc(0, 0, 10, 10, 180, 90);
-            path1.AddArc(190 - 10, 0, 10, 10, 270, 90);
-            path1.AddArc(190 - 10, 50 - 10, 10, 10, 0, 90);
-            path1.AddArc(0, 50 - 10, 10, 10, 90, 90);
-            path1.CloseFigure();
-            btnUpload.Region = new System.Drawing.Region(path1);
+            btnUpload.Region = null;
 
-            // Apply rounded corners to btnSort
-            System.Drawing.Drawing2D.GraphicsPath path2 = new System.Drawing.Drawing2D.GraphicsPath();
-            path2.AddArc(0, 0, 10, 10, 180, 90);
-            path2.AddArc(150 - 10, 0, 10, 10, 270, 90);
-            path2.AddArc(150 - 10, 50 - 10, 10, 10, 0, 90);
-            path2.AddArc(0, 50 - 10, 10, 10, 90, 90);
-            path2.CloseFigure();
-            btnSort.Region = new System.Drawing.Region(path2);
+            btnSort.Region = null;
 
-            // Apply rounded corners to button1
-            System.Drawing.Drawing2D.GraphicsPath path3 = new System.Drawing.Drawing2D.GraphicsPath();
-            path3.AddArc(0, 0, 10, 10, 180, 90);
-            path3.AddArc(200 - 10, 0, 10, 10, 270, 90);
-            path3.AddArc(200 - 10, 50 - 10, 10, 10, 0, 90);
-            path3.AddArc(0, 50 - 10, 10, 10, 90, 90);
-            path3.CloseFigure();
-            filesselectbtn.Region = new System.Drawing.Region(path3);
+            filesselectbtn.Region = null;
 
-            // Apply rounded corners to button2
-            System.Drawing.Drawing2D.GraphicsPath path4 = new System.Drawing.Drawing2D.GraphicsPath();
-            path4.AddArc(0, 0, 10, 10, 180, 90);
-            path4.AddArc(150 - 10, 0, 10, 10, 270, 90);
-            path4.AddArc(150 - 10, 50 - 10, 10, 10, 0, 90);
-            path4.AddArc(0, 50 - 10, 10, 10, 90, 90);
-            path4.CloseFigure();
-            mergebtn.Region = new System.Drawing.Region(path4);
+            mergebtn.Region = null;
         }
 
 
@@ -204,7 +175,34 @@ namespace DataSorter
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string[] selectedFiles = FileSelector.SelectExcelFiles();
 
+            if (selectedFiles != null && selectedFiles.Length > 0)
+            {
+                textBox1.Text = string.Join(";", selectedFiles);
+            }
+            else
+            {
+                MessageBox.Show("No files selected.");
+            }
+        }
+
+        private void mergebtn_Click(object sender, EventArgs e)
+        {
+            string[] selectedFiles = textBox1.Text.Split(';');
+
+            if (selectedFiles.Length > 0 && !string.IsNullOrEmpty(selectedFiles[0]))
+            {
+                // Define the path for the output file
+                string outputFilePath = Path.Combine(Path.GetDirectoryName(selectedFiles[0]), "MergedOutput.xlsx");
+
+                // Call the ExcelMerger to merge files
+                ExcelMerger.MergeExcelFiles(selectedFiles, outputFilePath);
+            }
+            else
+            {
+                MessageBox.Show("Please select files first.");
+            }
         }
     }
 
