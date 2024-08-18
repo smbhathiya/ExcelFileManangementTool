@@ -35,10 +35,9 @@
             this.txtFilePath.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtFilePath.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtFilePath.ForeColor = System.Drawing.Color.Black;
-            this.txtFilePath.Location = new System.Drawing.Point(180, 30);
-            this.txtFilePath.Margin = new System.Windows.Forms.Padding(4);
+            this.txtFilePath.Location = new System.Drawing.Point(135, 24);
             this.txtFilePath.Name = "txtFilePath";
-            this.txtFilePath.Size = new System.Drawing.Size(650, 23);
+            this.txtFilePath.Size = new System.Drawing.Size(488, 18);
             this.txtFilePath.TabIndex = 0;
             // 
             // btnUpload
@@ -51,10 +50,9 @@
             this.btnUpload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpload.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnUpload.ForeColor = System.Drawing.Color.White;
-            this.btnUpload.Location = new System.Drawing.Point(25, 80);
-            this.btnUpload.Margin = new System.Windows.Forms.Padding(4);
+            this.btnUpload.Location = new System.Drawing.Point(19, 65);
             this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(200, 50);
+            this.btnUpload.Size = new System.Drawing.Size(150, 41);
             this.btnUpload.TabIndex = 1;
             this.btnUpload.Text = "Select File";
             this.btnUpload.UseVisualStyleBackColor = false;
@@ -70,10 +68,9 @@
             this.btnSort.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSort.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnSort.ForeColor = System.Drawing.Color.White;
-            this.btnSort.Location = new System.Drawing.Point(250, 80);
-            this.btnSort.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSort.Location = new System.Drawing.Point(188, 65);
             this.btnSort.Name = "btnSort";
-            this.btnSort.Size = new System.Drawing.Size(150, 50);
+            this.btnSort.Size = new System.Drawing.Size(112, 41);
             this.btnSort.TabIndex = 2;
             this.btnSort.Text = "Organize";
             this.btnSort.UseVisualStyleBackColor = false;
@@ -84,10 +81,9 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(25, 30);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(19, 24);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(79, 23);
+            this.label1.Size = new System.Drawing.Size(66, 19);
             this.label1.TabIndex = 3;
             this.label1.Text = "File Path";
             // 
@@ -96,10 +92,9 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(25, 200);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(19, 162);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(123, 23);
+            this.label2.Size = new System.Drawing.Size(103, 19);
             this.label2.TabIndex = 5;
             this.label2.Text = "Selected Files:";
             // 
@@ -109,11 +104,11 @@
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.textBox1.ForeColor = System.Drawing.Color.Black;
-            this.textBox1.Location = new System.Drawing.Point(180, 200);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox1.Location = new System.Drawing.Point(135, 162);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(650, 23);
+            this.textBox1.Size = new System.Drawing.Size(488, 18);
             this.textBox1.TabIndex = 4;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // filesselectbtn
             // 
@@ -125,10 +120,9 @@
             this.filesselectbtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.filesselectbtn.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.filesselectbtn.ForeColor = System.Drawing.Color.White;
-            this.filesselectbtn.Location = new System.Drawing.Point(25, 250);
-            this.filesselectbtn.Margin = new System.Windows.Forms.Padding(4);
+            this.filesselectbtn.Location = new System.Drawing.Point(19, 203);
             this.filesselectbtn.Name = "filesselectbtn";
-            this.filesselectbtn.Size = new System.Drawing.Size(200, 50);
+            this.filesselectbtn.Size = new System.Drawing.Size(150, 41);
             this.filesselectbtn.TabIndex = 6;
             this.filesselectbtn.Text = "Select Files";
             this.filesselectbtn.UseVisualStyleBackColor = false;
@@ -144,10 +138,9 @@
             this.mergebtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.mergebtn.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.mergebtn.ForeColor = System.Drawing.Color.White;
-            this.mergebtn.Location = new System.Drawing.Point(250, 250);
-            this.mergebtn.Margin = new System.Windows.Forms.Padding(4);
+            this.mergebtn.Location = new System.Drawing.Point(188, 203);
             this.mergebtn.Name = "mergebtn";
-            this.mergebtn.Size = new System.Drawing.Size(150, 50);
+            this.mergebtn.Size = new System.Drawing.Size(112, 41);
             this.mergebtn.TabIndex = 7;
             this.mergebtn.Text = "Merge Files";
             this.mergebtn.UseVisualStyleBackColor = false;
@@ -156,18 +149,19 @@
             // fileCount
             // 
             this.fileCount.AutoSize = true;
-            this.fileCount.Location = new System.Drawing.Point(772, 241);
+            this.fileCount.Location = new System.Drawing.Point(558, 193);
+            this.fileCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.fileCount.Name = "fileCount";
-            this.fileCount.Size = new System.Drawing.Size(58, 16);
+            this.fileCount.Size = new System.Drawing.Size(0, 13);
             this.fileCount.TabIndex = 8;
-            this.fileCount.Text = "fileCount";
+            this.fileCount.Click += new System.EventHandler(this.fileCount_Click);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(886, 510);
+            this.ClientSize = new System.Drawing.Size(664, 414);
             this.Controls.Add(this.fileCount);
             this.Controls.Add(this.mergebtn);
             this.Controls.Add(this.filesselectbtn);
@@ -179,7 +173,6 @@
             this.Controls.Add(this.txtFilePath);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Data Organizer";

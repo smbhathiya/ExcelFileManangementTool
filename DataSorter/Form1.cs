@@ -175,15 +175,24 @@ namespace DataSorter
 
         private void button1_Click(object sender, EventArgs e)
         {
+
             string[] selectedFiles = FileSelector.SelectExcelFiles();
 
             if (selectedFiles != null && selectedFiles.Length > 0)
             {
-                textBox1.Text = string.Join(";", selectedFiles);
+                // Extract the file names from the full file paths
+                string[] fileNames = selectedFiles.Select(file => System.IO.Path.GetFileName(file)).ToArray();
+
+                // Join the file names with a semicolon
+                textBox1.Text = string.Join(", ", fileNames);
+
+                // Set the count of selected files in the label
+                fileCount.Text = $"File Count: {fileNames.Length}";
             }
             else
             {
                 MessageBox.Show("No files selected.");
+                fileCount.Text = "File Count: 0";
             }
         }
 
@@ -203,6 +212,16 @@ namespace DataSorter
             {
                 MessageBox.Show("Please select files first.");
             }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fileCount_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
