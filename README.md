@@ -26,14 +26,6 @@
 - **Visual Studio**: Integrated development environment used for building the application.
 - **C#**: Programming language used for developing the application logic.
 
-
-## Contact
-
-For any inquiries or feedback, you can reach out to the author:
-
-- **Author**: Bhathiya Lakshan
-- **Email**: [bhathiya@example.com](mailto:bhathiya@example.com)
-
 ---
 
 Thank you for using FileMaster Tools! We hope it helps you manage and organize your files more efficiently.
