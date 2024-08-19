@@ -25,6 +25,15 @@ namespace DataSorter
             filesselectbtn.Region = null;
 
             mergebtn.Region = null;
+
+            panelOrganizeFiles.Visible = true;
+            panelMergeFiles.Visible = false;
+
+            button1.BackColor = System.Drawing.Color.LightBlue;  
+            button2.BackColor = System.Drawing.Color.Gainsboro; 
+
+            button1.Click += SortFilesMenu_Click; 
+            button2.Click += MergeFilesMenu_Click;
         }
 
 
@@ -220,6 +229,45 @@ namespace DataSorter
         }
 
         private void fileCount_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void SortFilesMenu_Click(object sender, EventArgs e)
+        {
+            panelOrganizeFiles.Visible = true;
+            panelMergeFiles.Visible = false;
+
+            button1.BackColor = System.Drawing.Color.LightBlue;  
+            button2.BackColor = System.Drawing.Color.Gainsboro;  
+        }
+
+        private void MergeFilesMenu_Click(object sender, EventArgs e)
+        {
+            panelOrganizeFiles.Visible = false;
+            panelMergeFiles.Visible = true;
+
+            button1.BackColor = System.Drawing.Color.Gainsboro; 
+            button2.BackColor = System.Drawing.Color.LightBlue; 
+        }
+
+        private void panelMergeFiles_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load_1(object sender, EventArgs e)
         {
 
         }
