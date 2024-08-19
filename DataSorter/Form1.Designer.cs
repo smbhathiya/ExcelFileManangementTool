@@ -47,9 +47,9 @@ namespace DataSorter
             this.button2 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.panelOrganizeFiles = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
             this.panelMergeFiles = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.panelOrganizeFiles.SuspendLayout();
             this.panelMergeFiles.SuspendLayout();
             this.SuspendLayout();
@@ -239,6 +239,16 @@ namespace DataSorter
             this.panelOrganizeFiles.Size = new System.Drawing.Size(800, 458);
             this.panelOrganizeFiles.TabIndex = 12;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Tai Le", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(16, 15);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(178, 27);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "ORGANIZE FILES";
+            // 
             // panelMergeFiles
             // 
             this.panelMergeFiles.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -264,16 +274,6 @@ namespace DataSorter
             this.label4.TabIndex = 8;
             this.label4.Text = "MERGE FILES";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Tai Le", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(16, 15);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(178, 27);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "ORGANIZE FILES";
-            // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(1005, 565);
@@ -282,7 +282,9 @@ namespace DataSorter
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "File Master Tools";
             this.Load += new System.EventHandler(this.Form1_Load_1);
