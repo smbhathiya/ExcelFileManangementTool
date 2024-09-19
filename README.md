@@ -1,6 +1,6 @@
 # FileMaster Tools
 
-**FileMaster Tools** is a powerful application designed to help you manage and organize your files efficiently. With its robust features for merging Excel files, detecting duplicates, and providing detailed application information, it ensures a seamless user experience for data handling tasks.
+**FileMaster Tools** is a powerful application designed to help you manage and organize execl files efficiently. With its robust features for merging Excel files, detecting duplicates, and providing detailed application information, it ensures a seamless user experience for data handling tasks.
 
 ## Features
 
