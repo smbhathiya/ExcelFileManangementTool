@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace DataSorter
+namespace ExcelFileHandler.Services
 {
     public static class ExcelMerger
     {

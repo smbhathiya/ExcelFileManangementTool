@@ -1,8 +1,8 @@
-﻿using FileMasterTools.Views;
+﻿using ExcelFileHandler.Views;
 using System;
 using System.Windows.Forms;
 
-namespace FileMasterTools
+namespace ExcelFileHandler
 {
     internal static class Program
     {

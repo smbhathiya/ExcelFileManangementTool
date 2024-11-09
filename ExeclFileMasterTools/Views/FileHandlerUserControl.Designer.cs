@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace FileMasterTools.Views
+namespace ExcelFileHandler.Views
 {
     partial class FileHandlerUserControl
     {
@@ -11,6 +11,7 @@ namespace FileMasterTools.Views
         private ListBox lstSelectedFiles;
         private Button btnSelectFiles;
         private Button btnRemoveFile;
+        private Button btnMergeFiles;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -36,39 +37,84 @@ namespace FileMasterTools.Views
             this.lstSelectedFiles = new System.Windows.Forms.ListBox();
             this.btnSelectFiles = new System.Windows.Forms.Button();
             this.btnRemoveFile = new System.Windows.Forms.Button();
-
+            this.btnMergeFiles = new System.Windows.Forms.Button();
+            this.SuspendLayout();
             // 
             // lstSelectedFiles
             // 
+            this.lstSelectedFiles.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lstSelectedFiles.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstSelectedFiles.FormattingEnabled = true;
-            this.lstSelectedFiles.Location = new System.Drawing.Point(30, 50);  // Set location on form
-            this.lstSelectedFiles.Name = "lstSelectedFiles";  // Ensure it matches the name in the code
-            this.lstSelectedFiles.Size = new System.Drawing.Size(200, 160);
-
+            this.lstSelectedFiles.ItemHeight = 19;
+            this.lstSelectedFiles.Location = new System.Drawing.Point(21, 23);
+            this.lstSelectedFiles.Name = "lstSelectedFiles";
+            this.lstSelectedFiles.Size = new System.Drawing.Size(700, 152);
+            this.lstSelectedFiles.TabIndex = 0;
             // 
             // btnSelectFiles
             // 
+            this.btnSelectFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(27)))), ((int)(((byte)(27)))));
+            this.btnSelectFiles.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSelectFiles.FlatAppearance.BorderSize = 0;
+            this.btnSelectFiles.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(130)))), ((int)(((byte)(82)))));
+            this.btnSelectFiles.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(130)))), ((int)(((byte)(80)))));
+            this.btnSelectFiles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSelectFiles.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSelectFiles.ForeColor = System.Drawing.Color.White;
+            this.btnSelectFiles.Location = new System.Drawing.Point(200, 202);
+            this.btnSelectFiles.Name = "btnSelectFiles";
+            this.btnSelectFiles.Size = new System.Drawing.Size(160, 50);
+            this.btnSelectFiles.TabIndex = 1;
             this.btnSelectFiles.Text = "Select Files";
-            this.btnSelectFiles.Location = new System.Drawing.Point(30, 220);  // Button location
+            this.btnSelectFiles.UseVisualStyleBackColor = false;
             this.btnSelectFiles.Click += new System.EventHandler(this.btnSelectFiles_Click);
-
             // 
             // btnRemoveFile
             // 
+            this.btnRemoveFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(27)))), ((int)(((byte)(27)))));
+            this.btnRemoveFile.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRemoveFile.FlatAppearance.BorderSize = 0;
+            this.btnRemoveFile.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(25)))), ((int)(((byte)(16)))));
+            this.btnRemoveFile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(25)))), ((int)(((byte)(16)))));
+            this.btnRemoveFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRemoveFile.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRemoveFile.ForeColor = System.Drawing.Color.White;
+            this.btnRemoveFile.Location = new System.Drawing.Point(21, 202);
+            this.btnRemoveFile.Name = "btnRemoveFile";
+            this.btnRemoveFile.Size = new System.Drawing.Size(160, 50);
+            this.btnRemoveFile.TabIndex = 2;
             this.btnRemoveFile.Text = "Remove File";
-            this.btnRemoveFile.Location = new System.Drawing.Point(150, 220);  // Button location
+            this.btnRemoveFile.UseVisualStyleBackColor = false;
             this.btnRemoveFile.Click += new System.EventHandler(this.btnRemoveFile_Click);
-
             // 
-            // FileHandlerForm
+            // btnMergeFiles
             // 
-            this.ClientSize = new System.Drawing.Size(300, 300);
-            this.Controls.Add(this.lstSelectedFiles);  // Add ListBox to the form
+            this.btnMergeFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(27)))), ((int)(((byte)(27)))));
+            this.btnMergeFiles.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnMergeFiles.FlatAppearance.BorderSize = 0;
+            this.btnMergeFiles.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DodgerBlue;
+            this.btnMergeFiles.FlatAppearance.MouseOverBackColor = System.Drawing.Color.RoyalBlue;
+            this.btnMergeFiles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMergeFiles.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMergeFiles.ForeColor = System.Drawing.Color.White;
+            this.btnMergeFiles.Location = new System.Drawing.Point(561, 202);
+            this.btnMergeFiles.Name = "btnMergeFiles";
+            this.btnMergeFiles.Size = new System.Drawing.Size(160, 50);
+            this.btnMergeFiles.TabIndex = 3;
+            this.btnMergeFiles.Text = "Merge Files";
+            this.btnMergeFiles.UseVisualStyleBackColor = false;
+            this.btnMergeFiles.Click += new System.EventHandler(this.btnMergeFiles_Click);
+            // 
+            // FileHandlerUserControl
+            // 
+            this.Controls.Add(this.lstSelectedFiles);
             this.Controls.Add(this.btnSelectFiles);
             this.Controls.Add(this.btnRemoveFile);
-            this.Name = "FileHandlerForm";
-            this.Text = "File Handler";
+            this.Controls.Add(this.btnMergeFiles);
+            this.Name = "FileHandlerUserControl";
+            this.Size = new System.Drawing.Size(750, 400);
             this.ResumeLayout(false);
+
         }
         #endregion
     }

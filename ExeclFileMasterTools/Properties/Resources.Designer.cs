@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FileMasterTools.Properties {
+namespace ExcelFileHandler.Properties {
     using System;
     
     

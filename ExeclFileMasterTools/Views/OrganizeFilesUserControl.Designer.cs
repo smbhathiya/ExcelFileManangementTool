@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace FileMasterTools.Views
+namespace ExcelFileHandler.Views
 {
     partial class OrganizeFilesUserControl
     {

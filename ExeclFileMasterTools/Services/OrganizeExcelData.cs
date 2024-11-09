@@ -1,4 +1,5 @@
-﻿using OfficeOpenXml;
+﻿using ExcelFileHandler.Models;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileMasterTools.Services
+namespace ExcelFileHandler.Services
 {
     public class ExcelOrganizer
     {
@@ -28,7 +29,8 @@ namespace FileMasterTools.Services
                     var worksheet = package.Workbook.Worksheets.First();
                     for (int row = 1; row <= worksheet.Dimension.End.Row; row++)
                     {
-                        var line = string.Join(",", worksheet.Cells[row, 1, row, worksheet.Dimension.End.Column].Select(c => c.Text));
+                        var line = string.Join(",", worksheet.Cells[row, 1, row, worksheet.Dimension.End.Column]
+                            .Select(c => (c.Text ?? "").Replace(",", "")));
                         lines.Add(line);
                     }
                 }
@@ -38,16 +40,10 @@ namespace FileMasterTools.Services
                 throw new InvalidOperationException("Unsupported file format. Please select a CSV or Excel file.");
             }
 
-            // Initialize dictionaries to store names, grades, mediums, and other information
-            Dictionary<string, List<string>> names = new Dictionary<string, List<string>>();
-            Dictionary<string, string> grades = new Dictionary<string, string>();
-            Dictionary<string, string> mediums = new Dictionary<string, string>();
-            Dictionary<string, string> courses = new Dictionary<string, string>();
+            // Create a class to hold the student data
+            var studentRecords = new HashSet<StudentRecord>(new StudentRecordComparer());
 
-            // HashSet to keep track of unique names
-            HashSet<string> uniqueNames = new HashSet<string>();
-
-            // Parse each line of the file and extract names, grades, mediums, and courses
+            // Parse each line of the file and extract information
             foreach (string line in lines)
             {
                 string[] parts = line.Split(',');
@@ -58,32 +54,31 @@ namespace FileMasterTools.Services
 
                 string entityName = parts[0].Trim();
                 string value = parts[1].Trim();
-                string whatsappNumber = parts[2].Trim();
+                string whatsappNumber = NormalizeWhatsAppNumber(parts[2].Trim());
 
-                // Check if entityName is "Name", "Grade", "Medium", or "Course" and store the value accordingly
+                if (string.IsNullOrWhiteSpace(value) || value.Equals("-"))
+                {
+                    value = "-";
+                }
+
+                // Find or create the student record
                 if (entityName.Equals("Name", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (uniqueNames.Contains(value)) continue;
-
-                    uniqueNames.Add(value); // Add the name to the set of unique names
-
-                    if (!names.ContainsKey(value))
+                    var record = new StudentRecord { Name = value, WhatsAppNumber = whatsappNumber };
+                    studentRecords.Add(record);
+                }
+                else
+                {
+                    var existingRecord = studentRecords.FirstOrDefault(r => r.WhatsAppNumber == whatsappNumber);
+                    if (existingRecord != null)
                     {
-                        names[value] = new List<string>();
+                        if (entityName.Equals("Grade", StringComparison.OrdinalIgnoreCase))
+                            existingRecord.Grade = value;
+                        else if (entityName.Equals("Medium", StringComparison.OrdinalIgnoreCase))
+                            existingRecord.Medium = value;
+                        else if (entityName.Equals("Course", StringComparison.OrdinalIgnoreCase))
+                            existingRecord.Course = value;
                     }
-                    names[value].Add(whatsappNumber);
-                }
-                else if (entityName.Equals("Grade", StringComparison.OrdinalIgnoreCase))
-                {
-                    grades[whatsappNumber] = value;
-                }
-                else if (entityName.Equals("Medium", StringComparison.OrdinalIgnoreCase))
-                {
-                    mediums[whatsappNumber] = value;
-                }
-                else if (entityName.Equals("Course", StringComparison.OrdinalIgnoreCase))
-                {
-                    courses[whatsappNumber] = value;
                 }
             }
 
@@ -91,19 +86,10 @@ namespace FileMasterTools.Services
             List<string> sortedData = new List<string>();
             sortedData.Add("Name,WhatsApp Number,Grade,Medium,Course");
 
-            // Use the names dictionary as the base for sorting
-            foreach (var pair in names)
+            // Sort the records by name and add them to sortedData
+            foreach (var record in studentRecords.OrderBy(r => r.Name))
             {
-                string name = pair.Key;
-                List<string> whatsappNumbers = pair.Value;
-                foreach (string whatsappNumber in whatsappNumbers)
-                {
-                    string grade = grades.ContainsKey(whatsappNumber) ? grades[whatsappNumber] : "-";
-                    string medium = mediums.ContainsKey(whatsappNumber) ? mediums[whatsappNumber] : "-";
-                    string course = courses.ContainsKey(whatsappNumber) ? courses[whatsappNumber] : "-";
-
-                    sortedData.Add($"{name},{whatsappNumber},{grade},{medium},{course}");
-                }
+                sortedData.Add($"{record.Name},{record.WhatsAppNumber},{record.Grade},{record.Medium},{record.Course}");
             }
 
             // Save the organized data to a new file
@@ -124,11 +110,11 @@ namespace FileMasterTools.Services
                     var worksheet = package.Workbook.Worksheets.Add("OrganizedData");
 
                     // Write the headers
-                    worksheet.Cells[1, 1].Value = "Name";
-                    worksheet.Cells[1, 2].Value = "WhatsApp Number";
-                    worksheet.Cells[1, 3].Value = "Grade";
-                    worksheet.Cells[1, 4].Value = "Medium";
-                    worksheet.Cells[1, 5].Value = "Course";
+                    string[] headers = { "Name", "WhatsApp Number", "Grade", "Medium", "Course" };
+                    for (int i = 0; i < headers.Length; i++)
+                    {
+                        worksheet.Cells[1, i + 1].Value = headers[i];
+                    }
 
                     // Write the sorted data
                     int rowIndex = 2; // Start from row 2 (after headers)
@@ -142,13 +128,58 @@ namespace FileMasterTools.Services
                         rowIndex++;
                     }
 
+                    // Auto-fit columns
+                    worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
                     // Save the new Excel file
                     package.Save();
                 }
             }
 
-            // Show success message
             Console.WriteLine($"Sorting completed. Organized data saved to {newFilePath}");
+        }
+
+        private string NormalizeWhatsAppNumber(string number)
+        {
+            if (string.IsNullOrWhiteSpace(number))
+                return "-";
+
+            // Remove any non-digit characters
+            number = new string(number.Where(char.IsDigit).ToArray());
+
+            // If the number is empty after cleaning, return "-"
+            if (string.IsNullOrEmpty(number))
+                return "-";
+
+            // Ensure the number starts with the country code
+            if (!number.StartsWith("91") && number.Length == 10)
+            {
+                number = "91" + number;
+            }
+
+            return number;
+        }
+    }
+
+    public class StudentRecordComparer : IEqualityComparer<StudentRecord>
+    {
+        public bool Equals(StudentRecord x, StudentRecord y)
+        {
+            if (ReferenceEquals(x, y)) return true;
+            if (x is null || y is null) return false;
+
+            return x.Name == y.Name &&
+                   x.WhatsAppNumber == y.WhatsAppNumber &&
+                   x.Course == y.Course;
+        }
+
+        public int GetHashCode(StudentRecord obj)
+        {
+            var hash = new HashCode();
+            hash.Add(obj.Name);
+            hash.Add(obj.WhatsAppNumber);
+            hash.Add(obj.Course);
+            return hash.ToHashCode();
         }
     }
 }

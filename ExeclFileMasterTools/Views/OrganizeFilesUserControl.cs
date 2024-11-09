@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FileMasterTools.Views
+namespace ExcelFileHandler.Views
 {
     public partial class OrganizeFilesUserControl : UserControl
     {
@@ -95,7 +95,7 @@ namespace FileMasterTools.Views
             }
 
             // Create an instance of ExcelOrganizer and call the method
-            var excelOrganizer = new FileMasterTools.Services.ExcelOrganizer();
+            var excelOrganizer = new ExcelFileHandler.Services.ExcelOrganizer();
             excelOrganizer.OrganizeExcelData(selectedFilePath);
 
             MessageBox.Show("File organized successfully!");

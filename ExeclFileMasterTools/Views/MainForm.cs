@@ -1,4 +1,4 @@
-﻿using FileMasterTools.Services;
+﻿using ExcelFileHandler.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FileMasterTools.Views
+namespace ExcelFileHandler.Views
 {
     public partial class MainForm : Form
     {
@@ -47,6 +47,17 @@ namespace FileMasterTools.Views
         private void btnOrganizeFiles_Click(object sender, EventArgs e)
         {
             LoadOrganizeFilesUserControl(); 
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            string appInfo = "Application Name: Excel File Handler\n" +
+                     "Version: 2.1.0\n" +
+                     "Created by: Bhathiya Lakshan\n" +
+                     "Year: 2024\n" +
+                     "Contact Support: +94 76 894 1816" ;
+
+            MessageBox.Show(appInfo, "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
