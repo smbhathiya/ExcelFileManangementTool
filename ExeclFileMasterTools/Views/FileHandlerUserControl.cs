@@ -2,33 +2,46 @@
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ExcelFileHandler.Views
 {
     public partial class FileHandlerUserControl : UserControl
     {
-        // Declare a list to store the file paths
         private List<string> selectedFilePaths = new List<string>();
+        private Label lblNoFilesSelected;
 
         public FileHandlerUserControl()
         {
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
             InitializeComponent();
+            InitializeCustomComponents();
+        }
+
+        private void InitializeCustomComponents()
+        {
+            lblNoFilesSelected = new Label
+            {
+                Text = "No files selected",
+                ForeColor = Color.Gray,
+                Location = new Point(lstSelectedFiles.Left, lstSelectedFiles.Bottom + 5),
+                AutoSize = true,
+                Visible = lstSelectedFiles.Items.Count == 0 
+            };
+            Controls.Add(lblNoFilesSelected);
         }
 
         private void btnSelectFiles_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Excel Files|*.xlsx";
-            openFileDialog.Multiselect = true;
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Excel Files|*.xlsx",
+                Multiselect = true
+            };
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -38,9 +51,12 @@ namespace ExcelFileHandler.Views
                     if (!lstSelectedFiles.Items.Contains(fileNameOnly))
                     {
                         lstSelectedFiles.Items.Add(fileNameOnly);
-                        selectedFilePaths.Add(fileName); 
+                        selectedFilePaths.Add(fileName);
                     }
                 }
+
+                // Update the label visibility
+                UpdateNoFilesLabelVisibility();
             }
         }
 
@@ -59,15 +75,16 @@ namespace ExcelFileHandler.Views
                 if (result == DialogResult.Yes)
                 {
                     string fileToRemoveName = lstSelectedFiles.SelectedItem.ToString();
-
                     lstSelectedFiles.Items.Remove(lstSelectedFiles.SelectedItem);
 
                     string filePathToRemove = selectedFilePaths.FirstOrDefault(file => Path.GetFileName(file) == fileToRemoveName);
-
                     if (filePathToRemove != null)
                     {
-                        selectedFilePaths.Remove(filePathToRemove); 
+                        selectedFilePaths.Remove(filePathToRemove);
                     }
+
+                    // Update the label visibility
+                    UpdateNoFilesLabelVisibility();
                 }
             }
             else
@@ -82,7 +99,6 @@ namespace ExcelFileHandler.Views
             }
         }
 
-
         private void btnMergeFiles_Click(object sender, EventArgs e)
         {
             if (selectedFilePaths.Count == 0)
@@ -92,9 +108,11 @@ namespace ExcelFileHandler.Views
             }
 
             // Define the output file path for the merged file
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Excel Files|*.xlsx";
-            saveFileDialog.FileName = "MergedFile.xlsx";
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "Excel Files|*.xlsx",
+                FileName = "MergedFile.xlsx"
+            };
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -103,6 +121,17 @@ namespace ExcelFileHandler.Views
                 // Call the MergeExcelFiles method from ExcelMerger class
                 ExcelMerger.MergeExcelFiles(selectedFilePaths.ToArray(), outputFilePath);
             }
+        }
+
+        private void UpdateNoFilesLabelVisibility()
+        {
+            // Show or hide the label based on whether there are files selected
+            lblNoFilesSelected.Visible = lstSelectedFiles.Items.Count == 0;
+        }
+
+        private void lstSelectedFiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // You can add any additional behavior here if needed
         }
     }
 }

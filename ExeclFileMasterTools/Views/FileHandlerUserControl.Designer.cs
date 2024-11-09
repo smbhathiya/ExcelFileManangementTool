@@ -48,8 +48,9 @@ namespace ExcelFileHandler.Views
             this.lstSelectedFiles.ItemHeight = 19;
             this.lstSelectedFiles.Location = new System.Drawing.Point(22, 23);
             this.lstSelectedFiles.Name = "lstSelectedFiles";
-            this.lstSelectedFiles.Size = new System.Drawing.Size(700, 304);
+            this.lstSelectedFiles.Size = new System.Drawing.Size(700, 285);
             this.lstSelectedFiles.TabIndex = 0;
+            this.lstSelectedFiles.SelectedIndexChanged += new System.EventHandler(this.lstSelectedFiles_SelectedIndexChanged);
             // 
             // btnSelectFiles
             // 

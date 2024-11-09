@@ -30,6 +30,7 @@ namespace ExcelFileHandler.Views
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.pnlContent = new System.Windows.Forms.Panel();
             this.btnFileHandler = new System.Windows.Forms.Button();
             this.btnOrganizeFiles = new System.Windows.Forms.Button();
@@ -97,9 +98,10 @@ namespace ExcelFileHandler.Views
             this.Controls.Add(this.btnOrganizeFiles);
             this.Controls.Add(this.btnFileHandler);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Text = "File Master Tools";
+            this.Text = "Excel File Handler";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
