@@ -1,7 +1,8 @@
-﻿using System;
+﻿using FileMasterTools.Views;
+using System;
 using System.Windows.Forms;
 
-namespace DataSorter
+namespace FileMasterTools
 {
     internal static class Program
     {
@@ -13,7 +14,7 @@ namespace DataSorter
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
         }
     }
 }
