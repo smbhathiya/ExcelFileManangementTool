@@ -22,7 +22,7 @@ namespace ExcelFileHandler.Views
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            LoadFileHandlerUserControl();
+            LoadOrganizeFilesUserControl();
         }
 
         private void LoadFileHandlerUserControl()
@@ -42,11 +42,15 @@ namespace ExcelFileHandler.Views
 
         private void btnFileHandler_Click(object sender, EventArgs e)
         {
-            LoadFileHandlerUserControl(); 
+            LoadFileHandlerUserControl();
+            btnOrganizeFiles.BackColor = System.Drawing.Color.FromArgb(180, 180, 180);
+            btnFileHandler.BackColor = System.Drawing.Color.FromArgb(106, 164, 204);
         }
         private void btnOrganizeFiles_Click(object sender, EventArgs e)
         {
-            LoadOrganizeFilesUserControl(); 
+            LoadOrganizeFilesUserControl();
+            btnFileHandler.BackColor = System.Drawing.Color.FromArgb(180, 180, 180);
+            btnOrganizeFiles.BackColor = System.Drawing.Color.FromArgb(106, 164, 204);
         }
 
         private void label1_Click(object sender, EventArgs e)

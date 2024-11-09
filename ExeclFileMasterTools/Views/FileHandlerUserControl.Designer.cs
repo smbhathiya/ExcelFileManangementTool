@@ -46,14 +46,14 @@ namespace ExcelFileHandler.Views
             this.lstSelectedFiles.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstSelectedFiles.FormattingEnabled = true;
             this.lstSelectedFiles.ItemHeight = 19;
-            this.lstSelectedFiles.Location = new System.Drawing.Point(21, 23);
+            this.lstSelectedFiles.Location = new System.Drawing.Point(22, 23);
             this.lstSelectedFiles.Name = "lstSelectedFiles";
-            this.lstSelectedFiles.Size = new System.Drawing.Size(700, 152);
+            this.lstSelectedFiles.Size = new System.Drawing.Size(700, 304);
             this.lstSelectedFiles.TabIndex = 0;
             // 
             // btnSelectFiles
             // 
-            this.btnSelectFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(27)))), ((int)(((byte)(27)))));
+            this.btnSelectFiles.BackColor = System.Drawing.Color.SeaGreen;
             this.btnSelectFiles.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSelectFiles.FlatAppearance.BorderSize = 0;
             this.btnSelectFiles.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(130)))), ((int)(((byte)(82)))));
@@ -61,7 +61,7 @@ namespace ExcelFileHandler.Views
             this.btnSelectFiles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSelectFiles.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSelectFiles.ForeColor = System.Drawing.Color.White;
-            this.btnSelectFiles.Location = new System.Drawing.Point(200, 202);
+            this.btnSelectFiles.Location = new System.Drawing.Point(205, 363);
             this.btnSelectFiles.Name = "btnSelectFiles";
             this.btnSelectFiles.Size = new System.Drawing.Size(160, 50);
             this.btnSelectFiles.TabIndex = 1;
@@ -71,15 +71,15 @@ namespace ExcelFileHandler.Views
             // 
             // btnRemoveFile
             // 
-            this.btnRemoveFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(27)))), ((int)(((byte)(27)))));
+            this.btnRemoveFile.BackColor = System.Drawing.Color.IndianRed;
             this.btnRemoveFile.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRemoveFile.FlatAppearance.BorderSize = 0;
-            this.btnRemoveFile.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(25)))), ((int)(((byte)(16)))));
-            this.btnRemoveFile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(25)))), ((int)(((byte)(16)))));
+            this.btnRemoveFile.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(75)))), ((int)(((byte)(75)))));
+            this.btnRemoveFile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(75)))), ((int)(((byte)(75)))));
             this.btnRemoveFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRemoveFile.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRemoveFile.ForeColor = System.Drawing.Color.White;
-            this.btnRemoveFile.Location = new System.Drawing.Point(21, 202);
+            this.btnRemoveFile.Location = new System.Drawing.Point(22, 363);
             this.btnRemoveFile.Name = "btnRemoveFile";
             this.btnRemoveFile.Size = new System.Drawing.Size(160, 50);
             this.btnRemoveFile.TabIndex = 2;
@@ -89,7 +89,7 @@ namespace ExcelFileHandler.Views
             // 
             // btnMergeFiles
             // 
-            this.btnMergeFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(27)))), ((int)(((byte)(27)))));
+            this.btnMergeFiles.BackColor = System.Drawing.Color.SteelBlue;
             this.btnMergeFiles.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMergeFiles.FlatAppearance.BorderSize = 0;
             this.btnMergeFiles.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DodgerBlue;
@@ -97,7 +97,7 @@ namespace ExcelFileHandler.Views
             this.btnMergeFiles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMergeFiles.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMergeFiles.ForeColor = System.Drawing.Color.White;
-            this.btnMergeFiles.Location = new System.Drawing.Point(561, 202);
+            this.btnMergeFiles.Location = new System.Drawing.Point(562, 363);
             this.btnMergeFiles.Name = "btnMergeFiles";
             this.btnMergeFiles.Size = new System.Drawing.Size(160, 50);
             this.btnMergeFiles.TabIndex = 3;
@@ -112,7 +112,7 @@ namespace ExcelFileHandler.Views
             this.Controls.Add(this.btnRemoveFile);
             this.Controls.Add(this.btnMergeFiles);
             this.Name = "FileHandlerUserControl";
-            this.Size = new System.Drawing.Size(750, 400);
+            this.Size = new System.Drawing.Size(750, 445);
             this.ResumeLayout(false);
 
         }
