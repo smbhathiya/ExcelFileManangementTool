@@ -78,7 +78,6 @@ namespace ExcelFileHandler.Views
             try
             {
                 OrganizeExcelData(selectedFilePath);
-                MessageBox.Show("File organized successfully!");
             }
             catch (Exception ex)
             {
@@ -94,11 +93,8 @@ namespace ExcelFileHandler.Views
                 return;
             }
 
-            // Create an instance of ExcelOrganizer and call the method
             var excelOrganizer = new ExcelFileHandler.Services.ExcelOrganizer();
             excelOrganizer.OrganizeExcelData(selectedFilePath);
-
-            MessageBox.Show("File organized successfully!");
         }
 
         private void lblSelectedFile_Click(object sender, EventArgs e)
