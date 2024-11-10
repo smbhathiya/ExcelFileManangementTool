@@ -1,170 +1,243 @@
-﻿using ExcelFileHandler.Models;
+﻿using Microsoft.VisualBasic.FileIO;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace ExcelFileHandler.Services
 {
     public class ExcelOrganizer
     {
+        private class StudentEntry
+        {
+            public string Name { get; set; }
+            public string WhatsAppNumber { get; set; }
+            public string Grade { get; set; }
+            public string Medium { get; set; }
+            public DateTime? Timestamp { get; set; }
+
+            public string GetUniqueKey()
+            {
+                return $"{Name}|{WhatsAppNumber}|{Grade}|{Medium}";
+            }
+        }
+
+        private string CleanNameValue(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return value;
+
+            // Remove specific special characters
+            string cleaned = value.Replace(",", " ")
+                                .Replace("/", " ")
+                                .Replace("?", " ")
+                                .Replace("_", " ")
+                                .Replace("-", " ")
+                                .Replace(".", " ")
+                                .Replace(";", " ");
+
+            // Remove any extra spaces and trim
+            cleaned = Regex.Replace(cleaned, @"\s+", " ").Trim();
+
+            return cleaned;
+        }
+
         public void OrganizeExcelData(string filePath)
         {
             if (string.IsNullOrEmpty(filePath))
             {
-                MessageBox.Show("Please select a CSV or Excel file first.");
+                MessageBox.Show("Please select an Excel file first.");
                 return;
             }
 
-            // Set EPPlus license context
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-            string originalFileName = Path.GetFileNameWithoutExtension(filePath);
-            string outputFileName = originalFileName + "_organized_data.xlsx";  // Changed to .xlsx
-            string outputFilePath = Path.Combine(Path.GetDirectoryName(filePath), outputFileName);
-
-            List<string> lines = new List<string>();
-
-            if (Path.GetExtension(filePath).Equals(".csv", StringComparison.OrdinalIgnoreCase))
+            if (!Path.GetExtension(filePath).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
             {
-                // Read CSV and ensure WhatsApp numbers are treated as text (as strings)
-                lines = File.ReadAllLines(filePath, Encoding.UTF8).ToList();
-            }
-            else if (Path.GetExtension(filePath).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
-            {
-                using (var package = new ExcelPackage(new FileInfo(filePath)))
-                {
-                    var worksheet = package.Workbook.Worksheets.First();
-
-                    for (int row = 1; row <= worksheet.Dimension.End.Row; row++)
-                    {
-                        var rowData = new List<string>();
-                        for (int col = 1; col <= worksheet.Dimension.End.Column; col++)
-                        {
-                            // Use the raw value (not Text) to prevent scientific notation issue
-                            var cellValue = worksheet.Cells[row, col].Value?.ToString() ?? string.Empty;
-
-                            // If it's the WhatsApp number column, prepend with apostrophe
-                            if (col == 3)  // Assuming WhatsApp numbers are in the 3rd column
-                            {
-                                // Prepend a single quote (') to ensure Excel treats it as text
-                                cellValue = "'" + cellValue;
-                            }
-
-                            rowData.Add(cellValue);
-
-                            // Debugging: Log the value of WhatsApp numbers
-                            if (col == 3)  // Log only the WhatsApp column
-                            {
-                                Console.WriteLine($"Row {row}, WhatsApp: {cellValue}");
-                            }
-                        }
-                        var line = string.Join(",", rowData);
-                        lines.Add(line);
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Unsupported file format. Please select a CSV or Excel file.");
+                MessageBox.Show("Unsupported file format. Please select an Excel file.");
                 return;
             }
 
-            Dictionary<string, List<string>> names = new Dictionary<string, List<string>>();
-            Dictionary<string, string> grades = new Dictionary<string, string>();
-            Dictionary<string, string> mediums = new Dictionary<string, string>();
-            HashSet<string> uniqueNames = new HashSet<string>();
+            string outputFileName = Path.GetFileNameWithoutExtension(filePath) + "_organized_data.xlsx";
+            string outputFilePath = Path.Combine(Path.GetDirectoryName(filePath), outputFileName);
 
-            foreach (string line in lines)
+            // Dictionary to store the latest data for each unique combination
+            Dictionary<string, StudentEntry> entries = new Dictionary<string, StudentEntry>();
+            Dictionary<string, Dictionary<string, HashSet<string>>> studentGradesAndMediums =
+                new Dictionary<string, Dictionary<string, HashSet<string>>>();
+
+            // Read the Excel file
+            using (var package = new ExcelPackage(new FileInfo(filePath)))
             {
-                string[] parts = line.Split(',');
-                if (parts.Length < 3)
+                var worksheet = package.Workbook.Worksheets.First();
+                Dictionary<string, StudentEntry> tempEntries = new Dictionary<string, StudentEntry>();
+
+                for (int row = 1; row <= worksheet.Dimension.End.Row; row++)
                 {
-                    MessageBox.Show($"Skipping line: {line}. It does not have enough parts.");
-                    continue;
-                }
+                    string entityName = worksheet.Cells[row, 1].Value?.ToString().Trim() ?? "";
+                    string value = worksheet.Cells[row, 2].Value?.ToString().Trim() ?? "";
+                    string whatsappNumber = worksheet.Cells[row, 3].Value?.ToString().Trim() ?? "";
 
-                string entityName = parts[0].Trim();
-                string value = parts[1].Trim();
-                string whatsappNumber = parts[2].Trim().Trim('"').Replace("=", "").Replace("\"", "");  
-
-                // Ensure the WhatsApp number is treated as text
-                whatsappNumber = whatsappNumber.Trim();
-
-                if (entityName.Equals("Name", StringComparison.OrdinalIgnoreCase))
-                {
-                    if (uniqueNames.Contains(value))
+                    DateTime? timestamp = null;
+                    if (worksheet.Dimension.End.Column >= 4)
                     {
-                        continue;
-                    }
-
-                    uniqueNames.Add(value);
-
-                    if (!names.ContainsKey(value))
-                    {
-                        names[value] = new List<string>();
-                    }
-                    names[value].Add(whatsappNumber);
-                }
-                else if (entityName.Equals("Grade", StringComparison.OrdinalIgnoreCase))
-                {
-                    grades[whatsappNumber] = value;
-                }
-                else if (entityName.Equals("Medium", StringComparison.OrdinalIgnoreCase))
-                {
-                    mediums[whatsappNumber] = value;
-                }
-            }
-
-            try
-            {
-                using (var package = new ExcelPackage(new FileInfo(outputFilePath)))
-                {
-                    var worksheet = package.Workbook.Worksheets.Add("Organized Data");
-
-                    // Add headers
-                    worksheet.Cells[1, 1].Value = "Name";
-                    worksheet.Cells[1, 2].Value = "Grade";
-                    worksheet.Cells[1, 3].Value = "Medium";
-                    worksheet.Cells[1, 4].Value = "WhatsApp";
-
-                    // Style headers
-                    var headerRange = worksheet.Cells[1, 1, 1, 4];
-                    headerRange.Style.Font.Bold = true;
-                    headerRange.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                    headerRange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
-
-                    int row = 2;
-                    foreach (var name in names)
-                    {
-                        foreach (var whatsapp in name.Value)
+                        var timestampCell = worksheet.Cells[row, 4].Value;
+                        if (timestampCell != null)
                         {
-                            worksheet.Cells[row, 1].Value = name.Key;
-                            worksheet.Cells[row, 2].Value = grades.ContainsKey(whatsapp) ? grades[whatsapp] : "";
-                            worksheet.Cells[row, 3].Value = mediums.ContainsKey(whatsapp) ? mediums[whatsapp] : "";
-
-                            var whatsappCell = worksheet.Cells[row, 4];
-                            whatsappCell.Value = whatsapp;
-
-                            row++;
+                            if (timestampCell is DateTime dt)
+                                timestamp = dt;
+                            else if (DateTime.TryParse(timestampCell.ToString(), out DateTime parsedDt))
+                                timestamp = parsedDt;
                         }
                     }
 
-                    // Auto-fit columns
-                    worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+                    string key = whatsappNumber;
 
-                    // Save the Excel file
-                    package.Save();
+                    if (entityName.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                    {
+                        value = CleanNameValue(value);
+                        if (!tempEntries.ContainsKey(key))
+                        {
+                            tempEntries[key] = new StudentEntry
+                            {
+                                Name = value,
+                                WhatsAppNumber = whatsappNumber,
+                                Timestamp = timestamp
+                            };
+                        }
+                        else
+                        {
+                            tempEntries[key].Name = value;
+                            if (timestamp > tempEntries[key].Timestamp)
+                                tempEntries[key].Timestamp = timestamp;
+                        }
+                    }
+                    else if (entityName.Equals("Grade", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (!tempEntries.ContainsKey(key))
+                        {
+                            tempEntries[key] = new StudentEntry
+                            {
+                                WhatsAppNumber = whatsappNumber,
+                                Grade = value,
+                                Timestamp = timestamp
+                            };
+                        }
+                        else
+                        {
+                            // Store grade for this WhatsApp number
+                            if (!studentGradesAndMediums.ContainsKey(whatsappNumber))
+                            {
+                                studentGradesAndMediums[whatsappNumber] = new Dictionary<string, HashSet<string>>();
+                            }
+                            if (!studentGradesAndMediums[whatsappNumber].ContainsKey(value))
+                            {
+                                studentGradesAndMediums[whatsappNumber][value] = new HashSet<string>();
+                            }
+                        }
+                    }
+                    else if (entityName.Equals("Medium", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (!tempEntries.ContainsKey(key))
+                        {
+                            tempEntries[key] = new StudentEntry
+                            {
+                                WhatsAppNumber = whatsappNumber,
+                                Medium = value,
+                                Timestamp = timestamp
+                            };
+                        }
+                        else
+                        {
+                            // Store medium for the current grade if exists
+                            if (studentGradesAndMediums.ContainsKey(whatsappNumber))
+                            {
+                                foreach (var gradeSet in studentGradesAndMediums[whatsappNumber].Values)
+                                {
+                                    gradeSet.Add(value);
+                                }
+                            }
+                        }
+                    }
                 }
 
-                MessageBox.Show($"Data organized successfully and saved to {outputFilePath}");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error while saving the file: {ex.Message}");
+                // Create final entries for each unique combination
+                List<StudentEntry> finalEntries = new List<StudentEntry>();
+                foreach (var entry in tempEntries.Values.Where(e => !string.IsNullOrEmpty(e.Name)))
+                {
+                    if (studentGradesAndMediums.ContainsKey(entry.WhatsAppNumber))
+                    {
+                        foreach (var gradeKvp in studentGradesAndMediums[entry.WhatsAppNumber])
+                        {
+                            string grade = gradeKvp.Key;
+                            foreach (var medium in gradeKvp.Value)
+                            {
+                                finalEntries.Add(new StudentEntry
+                                {
+                                    Name = entry.Name,
+                                    WhatsAppNumber = entry.WhatsAppNumber,
+                                    Grade = grade,
+                                    Medium = medium,
+                                    Timestamp = entry.Timestamp
+                                });
+                            }
+                        }
+                    }
+                    else
+                    {
+                        finalEntries.Add(entry);
+                    }
+                }
+
+                // Remove exact duplicates while preserving multiple grades/mediums
+                var uniqueEntries = finalEntries
+                    .GroupBy(e => e.GetUniqueKey())
+                    .Select(g => g.OrderByDescending(e => e.Timestamp).First())
+                    .ToList();
+
+                // Save organized data
+                try
+                {
+                    using (var newPackage = new ExcelPackage(new FileInfo(outputFilePath)))
+                    {
+                        var newWorksheet = newPackage.Workbook.Worksheets.Add("Organized Data");
+
+                        // Add headers
+                        newWorksheet.Cells[1, 1].Value = "Name";
+                        newWorksheet.Cells[1, 2].Value = "WhatsApp";
+                        newWorksheet.Cells[1, 3].Value = "Grade";
+                        newWorksheet.Cells[1, 4].Value = "Medium";
+
+                        // Style headers
+                        var headerRange = newWorksheet.Cells[1, 1, 1, 4];
+                        headerRange.Style.Font.Bold = true;
+                        headerRange.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                        headerRange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+
+                        // Write data
+                        int row = 2;
+                        foreach (var entry in uniqueEntries.OrderBy(e => e.Name))
+                        {
+                            newWorksheet.Cells[row, 1].Value = entry.Name;
+                            newWorksheet.Cells[row, 2].Value = entry.WhatsAppNumber;
+                            newWorksheet.Cells[row, 3].Value = entry.Grade;
+                            newWorksheet.Cells[row, 4].Value = entry.Medium;
+                            row++;
+                        }
+
+                        newWorksheet.Cells[newWorksheet.Dimension.Address].AutoFitColumns();
+                        newPackage.Save();
+                    }
+
+                    MessageBox.Show($"Data organized successfully and saved to {outputFilePath}");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error while saving the file: {ex.Message}");
+                }
             }
         }
     }
