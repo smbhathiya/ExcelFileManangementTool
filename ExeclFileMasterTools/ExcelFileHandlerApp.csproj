@@ -195,7 +195,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\StudentRecord.cs" />
+    <Compile Include="Models\StudentEntry.cs" />
     <Compile Include="Services\ExcelMerger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

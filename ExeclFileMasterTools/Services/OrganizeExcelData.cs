@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic.FileIO;
+﻿using ExcelFileHandler.Models;
+using Microsoft.VisualBasic.FileIO;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -11,19 +12,6 @@ namespace ExcelFileHandler.Services
 {
     public class ExcelOrganizer
     {
-        private class StudentEntry
-        {
-            public string Name { get; set; }
-            public string WhatsAppNumber { get; set; }
-            public string Grade { get; set; }
-            public string Medium { get; set; }
-            public DateTime? Timestamp { get; set; }
-
-            public string GetUniqueKey()
-            {
-                return $"{Name}|{WhatsAppNumber}|{Grade}|{Medium}";
-            }
-        }
 
         private string CleanNameValue(string value)
         {
