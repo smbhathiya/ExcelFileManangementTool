@@ -9,9 +9,9 @@ namespace ExcelFileHandler.Models
     public class StudentRecord
     {
         public string Name { get; set; } = "-";
-        public string WhatsAppNumber { get; set; } = "-";
         public string Grade { get; set; } = "-";
         public string Medium { get; set; } = "-";
-        public string Course { get; set; } = "-";
+        public string WhatsAppNumber { get; set; }
+        public string Time { get; set; } = "-";
     }
 }

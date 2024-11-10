@@ -100,6 +100,11 @@ namespace ExcelFileHandler.Views
 
             MessageBox.Show("File organized successfully!");
         }
+
+        private void lblSelectedFile_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

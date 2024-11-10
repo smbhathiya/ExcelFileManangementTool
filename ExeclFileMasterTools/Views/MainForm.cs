@@ -55,7 +55,7 @@ namespace ExcelFileHandler.Views
 
         private void label1_Click(object sender, EventArgs e)
         {
-            string appInfo = "Application Name: Excel File Handler\n" +
+            string appInfo = "Application Name: Execl File Master Tools \n" +
                      "Version: 2.1.0\n" +
                      "Created by: Bhathiya Lakshan\n" +
                      "Year: 2024\n" +

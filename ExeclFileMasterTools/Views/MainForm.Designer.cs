@@ -83,11 +83,11 @@ namespace ExcelFileHandler.Views
             this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label1.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(60)))), ((int)(((byte)(38)))));
-            this.label1.Location = new System.Drawing.Point(833, 489);
+            this.label1.Location = new System.Drawing.Point(809, 488);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(136, 14);
+            this.label1.Size = new System.Drawing.Size(160, 14);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Excel File Handler © 2024";
+            this.label1.Text = "Execl File Master Tools © 2024";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // MainForm
@@ -101,7 +101,7 @@ namespace ExcelFileHandler.Views
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Text = "Excel File Handler";
+            this.Text = "Execl File Master Tools";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
