@@ -12,7 +12,6 @@ namespace ExcelFileHandler.Services
 {
     public class ExcelOrganizer
     {
-
         private string CleanNameValue(string value)
         {
             if (string.IsNullOrEmpty(value))
@@ -93,7 +92,8 @@ namespace ExcelFileHandler.Services
                             {
                                 Name = value,
                                 WhatsAppNumber = whatsappNumber,
-                                Timestamp = timestamp
+                                Timestamp = timestamp,
+                                Medium = "-"
                             };
                         }
                         else
@@ -111,19 +111,19 @@ namespace ExcelFileHandler.Services
                             {
                                 WhatsAppNumber = whatsappNumber,
                                 Grade = value,
-                                Timestamp = timestamp
+                                Timestamp = timestamp,
+                                Medium = "-" 
                             };
                         }
                         else
                         {
-                            // Store grade for this WhatsApp number
                             if (!studentGradesAndMediums.ContainsKey(whatsappNumber))
                             {
                                 studentGradesAndMediums[whatsappNumber] = new Dictionary<string, HashSet<string>>();
                             }
                             if (!studentGradesAndMediums[whatsappNumber].ContainsKey(value))
                             {
-                                studentGradesAndMediums[whatsappNumber][value] = new HashSet<string>();
+                                studentGradesAndMediums[whatsappNumber][value] = new HashSet<string> { "-" }; 
                             }
                         }
                     }
@@ -140,19 +140,19 @@ namespace ExcelFileHandler.Services
                         }
                         else
                         {
-                            // Store medium for the current grade if exists
                             if (studentGradesAndMediums.ContainsKey(whatsappNumber))
                             {
                                 foreach (var gradeSet in studentGradesAndMediums[whatsappNumber].Values)
                                 {
+                                    gradeSet.Clear(); 
                                     gradeSet.Add(value);
                                 }
                             }
+                            tempEntries[key].Medium = value;
                         }
                     }
                 }
 
-                // Create final entries for each unique combination
                 List<StudentEntry> finalEntries = new List<StudentEntry>();
                 foreach (var entry in tempEntries.Values.Where(e => !string.IsNullOrEmpty(e.Name)))
                 {
@@ -176,43 +176,42 @@ namespace ExcelFileHandler.Services
                     }
                     else
                     {
+                        if (string.IsNullOrEmpty(entry.Medium))
+                        {
+                            entry.Medium = "-";
+                        }
                         finalEntries.Add(entry);
                     }
                 }
 
-                // Remove exact duplicates while preserving multiple grades/mediums
                 var uniqueEntries = finalEntries
                     .GroupBy(e => e.GetUniqueKey())
                     .Select(g => g.OrderByDescending(e => e.Timestamp).First())
                     .ToList();
 
-                // Save organized data
                 try
                 {
                     using (var newPackage = new ExcelPackage(new FileInfo(outputFilePath)))
                     {
                         var newWorksheet = newPackage.Workbook.Worksheets.Add("Organized Data");
 
-                        // Add headers
                         newWorksheet.Cells[1, 1].Value = "Name";
                         newWorksheet.Cells[1, 2].Value = "WhatsApp";
                         newWorksheet.Cells[1, 3].Value = "Grade";
                         newWorksheet.Cells[1, 4].Value = "Medium";
 
-                        // Style headers
                         var headerRange = newWorksheet.Cells[1, 1, 1, 4];
                         headerRange.Style.Font.Bold = true;
                         headerRange.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
                         headerRange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
 
-                        // Write data
                         int row = 2;
                         foreach (var entry in uniqueEntries.OrderBy(e => e.Name))
                         {
                             newWorksheet.Cells[row, 1].Value = entry.Name;
                             newWorksheet.Cells[row, 2].Value = entry.WhatsAppNumber;
                             newWorksheet.Cells[row, 3].Value = entry.Grade;
-                            newWorksheet.Cells[row, 4].Value = entry.Medium;
+                            newWorksheet.Cells[row, 4].Value = entry.Medium ?? "-"; 
                             row++;
                         }
 
