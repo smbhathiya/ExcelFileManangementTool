@@ -52,7 +52,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Assets\favicon.ico</ApplicationIcon>
+    <ApplicationIcon>favicon-n.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>BD1A3BDB8963D4E8337709A8B2F69D62AE7E4C22</ManifestCertificateThumbprint>
@@ -66,6 +66,7 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup>
     <NoWin32Manifest>true</NoWin32Manifest>
@@ -254,7 +255,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\favicon.ico" />
+    <Content Include="Assets\favicon-n.ico" />
+    <Content Include="favicon-n.ico" />
+    <Content Include="favicon.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

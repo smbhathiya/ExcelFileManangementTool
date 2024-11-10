@@ -1,12 +1,4 @@
-﻿using ExcelFileHandler.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace ExcelFileHandler.Views
@@ -27,10 +19,10 @@ namespace ExcelFileHandler.Views
 
         private void LoadFileHandlerUserControl()
         {
-            pnlContent.Controls.Clear(); 
+            pnlContent.Controls.Clear();
             FileHandlerUserControl fileHandlerControl = new FileHandlerUserControl();
-            fileHandlerControl.Dock = DockStyle.Fill; 
-            pnlContent.Controls.Add(fileHandlerControl); 
+            fileHandlerControl.Dock = DockStyle.Fill;
+            pnlContent.Controls.Add(fileHandlerControl);
         }
         private void LoadOrganizeFilesUserControl()
         {
@@ -59,7 +51,7 @@ namespace ExcelFileHandler.Views
                      "Version: 2.1.0\n" +
                      "Created by: Bhathiya Lakshan\n" +
                      "Year: 2024\n" +
-                     "Contact Support: +94 76 894 1816" ;
+                     "Contact Support: +94 76 894 1816";
 
             MessageBox.Show(appInfo, "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
