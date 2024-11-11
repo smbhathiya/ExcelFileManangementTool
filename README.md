@@ -1,6 +1,6 @@
-# Execl File Management Tool 
+# Excel File Management Tool 
 
-**Execl File Management Tool** is a powerful application designed to help you manage and organize execl files efficiently. With its robust features for merging Excel files, detecting duplicates, and providing detailed application information, it ensures a seamless user experience for data handling tasks.
+**Excel File Management Tool** is a powerful application designed to help you manage and organize execl files efficiently. With its robust features for merging Excel files, detecting duplicates, and providing detailed application information, it ensures a seamless user experience for data handling tasks.
 
 ## Features
 
@@ -28,4 +28,4 @@
 
 ---
 
-Thank you for using Execl File Management Tool We hope it helps you manage and organize your files more efficiently.
+Thank you for using Excel File Management Tool We hope it helps you manage and organize your files more efficiently.
