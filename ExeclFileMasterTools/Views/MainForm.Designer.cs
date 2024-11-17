@@ -47,12 +47,12 @@ namespace ExcelFileHandler.Views
             // 
             // btnFileHandler
             // 
-            this.btnFileHandler.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.btnFileHandler.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.btnFileHandler.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnFileHandler.FlatAppearance.BorderSize = 0;
             this.btnFileHandler.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFileHandler.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFileHandler.ForeColor = System.Drawing.Color.Transparent;
+            this.btnFileHandler.Font = new System.Drawing.Font("Calibri", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFileHandler.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnFileHandler.Location = new System.Drawing.Point(19, 83);
             this.btnFileHandler.Name = "btnFileHandler";
             this.btnFileHandler.Size = new System.Drawing.Size(182, 59);
@@ -63,12 +63,12 @@ namespace ExcelFileHandler.Views
             // 
             // btnOrganizeFiles
             // 
-            this.btnOrganizeFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(164)))), ((int)(((byte)(204)))));
+            this.btnOrganizeFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(228)))), ((int)(((byte)(255)))));
             this.btnOrganizeFiles.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnOrganizeFiles.FlatAppearance.BorderSize = 0;
             this.btnOrganizeFiles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOrganizeFiles.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOrganizeFiles.ForeColor = System.Drawing.Color.Transparent;
+            this.btnOrganizeFiles.Font = new System.Drawing.Font("Calibri", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOrganizeFiles.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnOrganizeFiles.Location = new System.Drawing.Point(19, 24);
             this.btnOrganizeFiles.Name = "btnOrganizeFiles";
             this.btnOrganizeFiles.Size = new System.Drawing.Size(182, 59);
@@ -85,7 +85,7 @@ namespace ExcelFileHandler.Views
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(60)))), ((int)(((byte)(38)))));
             this.label1.Location = new System.Drawing.Point(778, 487);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(186, 14);
+            this.label1.Size = new System.Drawing.Size(228, 18);
             this.label1.TabIndex = 3;
             this.label1.Text = "Execl File Management Tool © 2024";
             this.label1.Click += new System.EventHandler(this.label1_Click);

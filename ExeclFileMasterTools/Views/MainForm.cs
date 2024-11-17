@@ -35,14 +35,14 @@ namespace ExcelFileHandler.Views
         private void btnFileHandler_Click(object sender, EventArgs e)
         {
             LoadFileHandlerUserControl();
-            btnOrganizeFiles.BackColor = System.Drawing.Color.FromArgb(180, 180, 180);
-            btnFileHandler.BackColor = System.Drawing.Color.FromArgb(106, 164, 204);
+            btnOrganizeFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            btnFileHandler.BackColor = System.Drawing.Color.FromArgb(191, 228, 255);
         }
         private void btnOrganizeFiles_Click(object sender, EventArgs e)
         {
             LoadOrganizeFilesUserControl();
-            btnFileHandler.BackColor = System.Drawing.Color.FromArgb(180, 180, 180);
-            btnOrganizeFiles.BackColor = System.Drawing.Color.FromArgb(106, 164, 204);
+            btnFileHandler.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            btnOrganizeFiles.BackColor = System.Drawing.Color.FromArgb(191, 228, 255);
         }
 
         private void label1_Click(object sender, EventArgs e)
