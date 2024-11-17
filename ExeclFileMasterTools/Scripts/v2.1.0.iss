@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Execl File Management Tool"
-#define MyAppVersion "2.1.0"
+#define MyAppVersion "2.1.1"
 #define MyAppExeName "Excel File Management Tools.exe"
 
 [Setup]
@@ -16,9 +16,9 @@ DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputDir=[Output directory]
+OutputDir=C:\Users\smbha\Music
 OutputBaseFilename=Execl File Management Tool
-SetupIconFile=[icon file loction]
+SetupIconFile=C:\Users\smbha\OneDrive\Desktop\My projects\.NET\FileMasterTools\ExeclFileMasterTools\Assets\favicon-n.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
